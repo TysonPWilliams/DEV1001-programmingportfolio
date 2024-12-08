@@ -18,6 +18,7 @@ class Transactions(BudgetManager):
 def add_expense():
     print("\nGetting User Expense")
     print("--------------------")
+    
     expense_name = input("Enter expense name: ")
     expense_amount = float(input("Enter the expense amount: $"))
     expense_category = [
@@ -29,11 +30,13 @@ def add_expense():
     ]
 
     counter = 1
+
     for category in expense_category:
         print(f'{counter}. {category}')
         counter += 1
     
-    choice_expense_category = int(input("Please choose a category from the list above: "))
+    value_range = f'(1 - {len(expense_category)})'
+    choice_expense_category = int(input(f"Please enter a category number {value_range}: "))
     print(f'You have entered: {expense_name}, ${expense_amount}, {expense_category[choice_expense_category - 1]}')
 
 def add_income():
