@@ -1,11 +1,11 @@
-from file_operations import load_financial_data
+from file_operations import *
 from financial_operations import *
 from display_data import display_data
 
 load_financial_data('financial_data.csv')
 
 while True:
-    print("Welcome to the Budget Manager!")
+    print("\nWelcome to the Budget Manager!")
     print("------------------------------")
     print("1. Enter an income")
     print("2. Enter an expense")
@@ -17,7 +17,8 @@ while True:
     if choice == "1":
         add_income()
     elif choice == "2":
-        add_expense()
+        expense = add_expense()
+        save_expense_to_file(expense, path)
     elif choice =="3":
         display_data()
     elif choice == "4":
