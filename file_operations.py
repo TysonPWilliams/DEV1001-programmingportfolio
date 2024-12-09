@@ -13,7 +13,7 @@ def load_financial_data(path):
     """
     try:
         with open(path) as file:
-            financial_data = csv.DictReader(file)
+            financial_data = csv.reader(file)
 
         return financial_data 
     except Exception as e:
@@ -22,13 +22,8 @@ def load_financial_data(path):
 def save_expense_to_file(expense, path):
     print(f'Saving User Expense: {expense} to {path}')
 
-    with open(path, 'a') as file:
-        writer = csv.DictWriter(file, fieldnames=['Name','Category', 'Amount'])
-        for row in expense:
-            writer.writerow(expense.to_dict())
 
-
-    # for row in csv.writer(open(path)):
-    #     expense.name = row[0]
-    #     expense.category = row[1]
-    #     expense.amount = row[2]
+    with open(path, 'a', newline='') as file:
+        fieldnames = ['Name','Category','Amount']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writerow({'Name': f'{expense.name}','Category': f'{expense.category}', 'Amount': f'{expense.amount}'})
