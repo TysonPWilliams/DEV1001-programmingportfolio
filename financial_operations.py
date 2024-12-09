@@ -75,7 +75,7 @@ def add_expense():
             
 
 def add_income():
-    print("\nAdding some income! 💵")
+    print("\nGetting User Income")
+    print("----------------------")
 
-def summarise_expenses():
-    print("Summarising user expenses!")
+    income_name = input("Enter the income name: ")
