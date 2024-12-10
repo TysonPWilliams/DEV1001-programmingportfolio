@@ -1,4 +1,4 @@
-from file_operations import load_financial_data, path, save_expense_to_file
+from file_operations import *
 from financial_operations import add_income, add_expense
 import csv
 
@@ -27,8 +27,10 @@ def main_menu():
         expense = add_expense()
         save_expense_to_file(expense, path)
     elif choice =="3":
-        summarise_expenses()
+        display_data()
     elif choice == "4":
+        investments()
+    elif choice == "5":
         quit()
     else:
         print("Your choice is invalid, try again!")
@@ -39,7 +41,7 @@ def summarise_expenses():
 
     
     with open(path, 'r') as file:
-        reader = csv.reader(file)
+        reader = csv.DictReader(file)
         
         for line in reader:
             print(line)
