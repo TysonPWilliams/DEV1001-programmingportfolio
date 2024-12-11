@@ -1,6 +1,6 @@
 import csv
 
-path = "financial_data.csv"
+path = "expense_data.csv"
 def load_financial_data(path):
     """
     Loads existing data from CSV file
@@ -20,6 +20,7 @@ def load_financial_data(path):
         print(f'An unexpected error occured: {e}')
     
 def save_expense_to_file(expense, path):
+    path = "expense_data.csv"
     print(f'Saving User Expense: {expense} to {path}')
 
 
@@ -27,3 +28,14 @@ def save_expense_to_file(expense, path):
         fieldnames = ['Name','Category','Amount']
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writerow({'Name': f'{expense.name}','Category': f'{expense.category}', 'Amount': f'{expense.amount}'})
+
+
+
+def save_income_to_file(income):
+    path = "income_data.csv"
+    print(f'Saving User Income: {income} to {path}')
+
+    with open(path, 'a') as file:
+        fieldnames = ['Name', 'Category', 'Amount']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writerow({'Name': f'{income.name}', 'Category': f'{income.category}', 'Amount': f'{income.amount}'})

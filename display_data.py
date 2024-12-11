@@ -1,10 +1,11 @@
 from file_operations import *
-from financial_operations import add_income, add_expense
+from financial_operations import Expense, Income
 import csv
+import crypto_operations
 
 def display_data():
     
-    with open('financial_data.csv', newline='') as file:
+    with open('expense_data.csv', newline='') as file:
         reader = csv.DictReader(file)
 
         for row in reader:
@@ -17,19 +18,22 @@ def main_menu():
     print("1. Enter an income")
     print("2. Enter an expense")
     print("3. Display all income and expenses")
-    print("4. Exit the application")
+    print("4. Access Crypto Menu")
+    print("5. Exit the application")
+    print("-------------------------------")
 
     choice = input("Please type in a number from the options above: ")
 
     if choice == "1":
-        add_income()
+        income = Income.add_income()
+        save_income_to_file(income)
     elif choice == "2":
-        expense = add_expense()
+        expense = Expense.add_expense()
         save_expense_to_file(expense, path)
     elif choice =="3":
         display_data()
     elif choice == "4":
-        investments()
+        crypto_operations.crypto_menu()
     elif choice == "5":
         quit()
     else:

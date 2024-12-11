@@ -3,6 +3,8 @@ from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
 import secret
 from pprint import pprint as pp
+import csv
+
 # url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/map'
 # parameters = {
 #   'start':'1',
@@ -28,7 +30,7 @@ from pprint import pprint as pp
 
 class CMC:
     # https://coinmarketcap.com/api/documentation/v1/
-    
+
     def __init__(self, token):
         self.apiurl = "https://pro-api.coinmarketcap.com"
         self.headers = {'Accepts': 'application/json','X-CMC_PRO_API_KEY': token}
@@ -41,14 +43,18 @@ class CMC:
        data = r.json()['data']
        return data
     
-    def get_price(self, symbol):
+    def get_price(self, id):
        url = self.apiurl + "/v2/cryptocurrency/quotes/latest"
-       parameters = {'symbol': symbol}
+       parameters = {'id': id}
        r = self.session.get(url, params=parameters)
-       data = r.json()['data']
-       return data
+       data = r.json()['data']       
+       return data['id']
     
 
 cmc = CMC(secret.API_KEY)
 
-pp(cmc.get_price('BTC'))
+# pp(cmc.get_price(id='1'))
+
+# with open('crypto.csv', 'a', newline='') as file:
+#     writer = csv.DictWriter(file, fieldnames=cmc.headers)
+#     writer.writerows(cmc.get_price(symbol='BTC', slug='bitcoin'))
