@@ -63,8 +63,40 @@ class Expense(BudgetManager):
             
 
 class Income(BudgetManager):
-    def __init__():
-        pass
+    def __init__(self, name, amount, category):
+        self.amount = amount
+        self.category = category
+        self.name = name
+
+    def add_income():
+        print("\nGetting User Income")
+        print("----------------------")
+
+        income_name = input("Enter the income name: ")
+        income_amount = float(input("Enter the income amount: $"))
+
+        income_category = [
+            "💼 Salary",
+            "🎁 Gift",
+            "🤑 Investment Income",
+            "🌟 Other Income"
+        ]
+
+        for i, category in enumerate(income_category):
+            print(f'{i + 1}. {category}')
+
+        value_range = f'(1 - {len(income_category)})'
+        choice_of_category = int(input(f'Please enter a category number {value_range}: ')) - 1
+
+        if choice_of_category in range(len(income_category)):
+            new_income = Income(
+                name=income_name, 
+                category=income_category[choice_of_category], 
+                amount=income_amount
+            )
+            return new_income
+        else:
+            print("You have entered an invalid option. Try again!")
 
 def add_expense():
     print("\nGetting User Expense")

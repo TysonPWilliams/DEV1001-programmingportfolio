@@ -2,6 +2,7 @@ from file_operations import *
 from financial_operations import Expense, Income
 import csv
 import crypto_operations
+from tabulate import tabulate
 
 def display_data():
     
@@ -49,3 +50,14 @@ def summarise_expenses():
         
         for line in reader:
             print(line)
+
+def display_csv_as_table():
+    """
+    Reads a CSV file and displays it's content as a table
+    """
+    with open('crypto.csv', 'r') as file:
+        reader = csv.reader(file)
+        headers = next(reader)
+        rows = [row for row in reader]
+    
+    print(tabulate(rows, headers=headers, tablefmt="grid"))
