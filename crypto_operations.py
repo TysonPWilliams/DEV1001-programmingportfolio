@@ -1,7 +1,8 @@
 from cmc_api import CMC
-import secret
 import display_data
 import csv
+import btc_calculations
+from datetime import datetime
 
 path = 'crypto.csv'
 
@@ -20,7 +21,13 @@ def crypto_menu():
         if choice == 1:
             add_crypto()
         elif choice == 2:
-            pass
+            print("------------------------------------")
+            print("Calculating the value of you BTC holdings\n")
+            btc_price = btc_calculations.get_btc_price()
+            btc_holdings = btc_calculations.read_csv_data('crypto.csv')
+            total_aud_value = btc_calculations.calculate_aud_value(btc_price, btc_holdings)
+            print(f"Your BTC holdings are worth approximately AUD ${total_aud_value:.2f}")
+            input("------Press Enter to Continue-------")
         elif choice == 3:
             pass
         elif choice == 4:
@@ -36,10 +43,11 @@ def add_crypto():
     print("-------------------------------")
     print(f'Adding {BTC_added} BTC to your portfolio!')
 
-    with open(path, 'a') as file:
-        fieldnames = ['BTC Added']
+    with open(path, 'a', newline='') as file:
+        fieldnames = ['BTC Added', 'Date']
         writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writerow({'BTC Added': f'{BTC_added}'})
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        writer.writerow({'BTC Added': BTC_added, 'Date': current_date})
         input("------Press Enter to Continue------")
 
 
