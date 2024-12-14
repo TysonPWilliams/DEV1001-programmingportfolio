@@ -25,7 +25,7 @@ def crypto_menu():
             btc_price = btc.get_btc_price()
             btc_holdings = btc.read_csv_data('crypto.csv')
             total_aud_value = btc.calculate_aud_value(btc_price, btc_holdings)
-            display_data.display_csv_as_table()
+            display_data.display_csv_as_table('crypto.csv')
             print(f"Your BTC holdings are worth approximately AUD ${total_aud_value:.2f}")
             input("------Press Enter to Continue-------")
         elif choice == 3:

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class BudgetManager():
     def __init__(self, amount, category, date):
         self.amount = amount
@@ -5,8 +7,11 @@ class BudgetManager():
         self.date = date
 
 class Expense(BudgetManager):
-    def __init__(self):
-        pass
+    def __init__(self, name, amount, category, date):
+        self.name = name
+        self.amount = amount
+        self.category = category
+        self.date = date
 
     def __str__(self):
         return f"Expense: {self.name}, {self.category}, ${self.amount:.2f}"
@@ -29,8 +34,8 @@ class Expense(BudgetManager):
             "🍔 Food",
             "🏠 Home",
             "🚗 Fuel",
-                "🎸 Entertainment",
-        "🌟 Misc"
+            "🎸 Entertainment",
+            "🌟 Misc"
         ]
 
         counter = 1
@@ -52,21 +57,23 @@ class Expense(BudgetManager):
                 add_expense()
 
             if choice_expense_category in range(len(expense_category)):
-                new_expense = expense_name, expense_category[choice_expense_category], expense_amount # Expense(
-                #     name=expense_name, 
-                #     category=expense_category[choice_expense_category], 
-                #     amount=expense_amount
-                # )
+                new_expense = Expense(
+                    name=expense_name, 
+                    category=expense_category[choice_expense_category], 
+                    amount=expense_amount,
+                    date = datetime.now().strftime('%Y-%m-%d')
+                )
                 return new_expense
             else:
                 print("You have entered an invalid option. Try again!")
             
 
 class Income(BudgetManager):
-    def __init__(self, name, amount, category):
+    def __init__(self, name, amount, category, date):
         self.amount = amount
         self.category = category
         self.name = name
+        self.date = date
 
     def add_income():
         print("\nGetting User Income")
@@ -92,7 +99,8 @@ class Income(BudgetManager):
             new_income = Income(
                 name=income_name, 
                 category=income_category[choice_of_category], 
-                amount=income_amount
+                amount=income_amount,
+                date = datetime.now().strftime('%Y-%m-%d')
             )
             return new_income
         else:

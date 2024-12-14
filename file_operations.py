@@ -25,9 +25,9 @@ def save_expense_to_file(expense, path):
 
 
     with open(path, 'a', newline='') as file:
-        fieldnames = ['Name','Category','Amount']
+        fieldnames = ['Name','Category','Amount', 'Date']
         writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writerow({'Name': f'{expense.name}','Category': f'{expense.category}', 'Amount': f'{expense.amount}'})
+        writer.writerow({'Name': f'{expense.name}','Category': f'{expense.category}', 'Amount': f'{expense.amount}', 'Date': f'{expense.date}'})
 
 
 
@@ -36,6 +36,6 @@ def save_income_to_file(income):
     print(f'Saving User Income: {income} to {path}')
 
     with open(path, 'a') as file:
-        fieldnames = ['Name', 'Category', 'Amount']
+        fieldnames = ['Name', 'Category', 'Amount', 'Date']
         writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writerow({'Name': f'{income.name}', 'Category': f'{income.category}', 'Amount': f'{income.amount}'})
+        writer.writerow({'Name': f'{income.name}', 'Category': f'{income.category}', 'Amount': f'{income.amount}', 'Date': f'{income.date}'})
