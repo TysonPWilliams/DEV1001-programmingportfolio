@@ -36,12 +36,6 @@ class CMC:
         self.headers = {'Accepts': 'application/json','X-CMC_PRO_API_KEY': token}
         self.session = Session()
         self.session.headers.update(self.headers)
-
-    def get_all_coins(self):
-       url = self.apiurl + "/v1/cryptocurrency/map"
-       r = self.session.get(url)
-       data = r.json()['data']
-       return data
     
     def get_price(self, id):
        url = self.apiurl + "/v2/cryptocurrency/quotes/latest"
@@ -51,7 +45,7 @@ class CMC:
        return data['id']
     
 
-cmc = CMC(secret.API_KEY)
+# cmc = CMC(secret.API_KEY)
 
 # pp(cmc.get_price(id='1'))
 

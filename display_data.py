@@ -1,5 +1,5 @@
 from file_operations import *
-from financial_operations import Expense, Income
+import financial_operations as fin_ops
 import csv
 import crypto_operations
 from tabulate import tabulate
@@ -18,11 +18,11 @@ def main_menu():
     choice = input("Please type in a number from the options above: ")
 
     if choice == "1":
-        income = Income.add_income()
-        save_income_to_file(income)
+        income = fin_ops.Income.add_income()
+        save_income_to_file(income, 'income_data.csv')
     elif choice == "2":
-        expense = Expense.add_expense()
-        save_expense_to_file(expense, path)
+        expense = fin_ops.Expense.add_expense()
+        save_expense_to_file(expense, 'expense_data.csv')
     elif choice =="3":
         display_data()
     elif choice == "4":
@@ -60,26 +60,26 @@ def display_data():
 
         if choice == "1":
             display_csv_as_table('income_data.csv')
-            summarise_totals('income_data.csv')
+            total = summarise_totals('income_data.csv')
+            print(f'The total amount is: ${total:.2f}!')
             input("------Please press Enter to continue----")
         elif choice == "2":
             display_csv_as_table('expense_data.csv')
-            summarise_totals('expense_data.csv')
+            total = summarise_totals('expense_data.csv')
+            print(f'The total amount is: ${total:.2f}!')
             input("------Please press Enter to continue----")
         elif choice == "3":
-            pass
+            income_summary = summarise_totals('income_data.csv')
+            fin_ops.income_expense_calc()
         elif choice == "4":
-            pass
+            max_category = max_category_spending()
+            print(f'\nYour max category is {max_category:.2f}!\n')
+            input("--------Press Enter to continue-------")
         elif choice == "5":
             main_menu()
         else:
             print("Your choice is invalid, try again!")
 
-        # with open('expense_data.csv', newline='') as file:
-        #     reader = csv.DictReader(file)
-
-        #     for row in reader:
-        #         print(row['Name'],row['Category'],row['Amount'])
 
 def summarise_totals(path):
     total = 0.0
@@ -90,4 +90,23 @@ def summarise_totals(path):
         for row in reader:
             total += float(row['Amount'])
     
-    print(f'The total amount is: ${total:.2f}!')
+    return total
+
+def max_category_spending():
+
+    category_totals = {}
+    with open('expense_data.csv') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            category = row['Category']
+            amount = float(row['Amount'])
+            category_totals[category] = category_totals.get(category, 0) + amount
+
+    max_category = None
+    max_amount = 0
+    for category, amount in category_totals.items():
+        if amount > max_amount:
+            max_category = category
+            max_amount = amount
+    
+    return max_category, max_amount
