@@ -18,11 +18,9 @@ def main_menu():
     choice = input("Please type in a number from the options above: ")
 
     if choice == "1":
-        income = fin_ops.Income.add_income()
-        save_income_to_file(income, 'income_data.csv')
+        fin_ops.Income.add_income()
     elif choice == "2":
-        expense = fin_ops.Expense.add_expense()
-        save_expense_to_file(expense, 'expense_data.csv')
+        fin_ops.Expense.add_expense()
     elif choice =="3":
         display_data()
     elif choice == "4":

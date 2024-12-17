@@ -1,5 +1,6 @@
 from datetime import datetime
 from display_data import summarise_totals
+import file_operations
 
 class Expense:
     def __init__(self, name, amount, category, date):
@@ -7,9 +8,6 @@ class Expense:
         self.amount = amount
         self.category = category
         self.date = date
-
-    def __str__(self):
-        return f"Expense: {self.name}, {self.category}, ${self.amount:.2f}"
     
     def add_expense():
         print("\nGetting User Expense")
@@ -20,10 +18,10 @@ class Expense:
             expense_amount = float(input("Enter the expense amount: $"))
         except ValueError:
             print("Error: Please enter a dollar amount ie: 4.95")
-            add_expense()
+            Expense.add_expense()
         except Exception as e:
             print(f'An unexpected error occured: {e}')
-            add_expense()
+            Expense.add_expense()
 
         expense_category = [
             "🍔 Food",
@@ -60,7 +58,9 @@ class Expense:
                     amount=expense_amount,
                     date = datetime.now().strftime('%Y-%m-%d')
                 )
-                return new_expense
+                new_expense_data = file_operations.FileOperations()
+                new_expense_data.save_expense(new_expense)
+                return
             else:
                 print("You have entered an invalid option. Try again!")
             
@@ -117,7 +117,9 @@ class Income:
                 amount=income_amount,
                 date = datetime.now().strftime('%Y-%m-%d')
             )
-            return new_income
+            new_income_data = file_operations.FileOperations()
+            new_income_data.save_income(new_income)
+            return
         else:
             print("You have entered an invalid option. Try again!")
             Income.add_income()
