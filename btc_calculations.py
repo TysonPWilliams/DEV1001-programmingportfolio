@@ -1,6 +1,8 @@
 import requests
+from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import csv
 import secret
+from colors import *
 
 def get_btc_price():
     """
@@ -15,10 +17,16 @@ def get_btc_price():
     headers = {
         "X-CMC_PRO_API_KEY": secret.API_KEY # Replace with your CoinMarketCap API key
     }
-    response = requests.get(url, headers=headers, params=parameters)
-    data = response.json()
-    btc_price = data['data']['BTC'][0]['quote']['AUD']['price']
-    return btc_price
+
+    try:
+        response = requests.get(url, headers=headers, params=parameters)
+        response.raise_for_status() # Raise an exception for non-2xx status codes
+        data = response.json()
+        btc_price = data['data']['BTC'][0]['quote']['AUD']['price']
+        return btc_price
+    except (ConnectionError, Timeout, TooManyRedirects) as e:
+        print(f'An error occured while fetching BTC price: {e}')
+        raise
 
 def read_csv_data(filename):
     """Reads the CSV file and extracts the user's BTC holdings."""
@@ -27,7 +35,11 @@ def read_csv_data(filename):
         reader = csv.reader(file)
         next(reader) # Skip the header row
         for row in reader:
-            btc_holdings += float(row[0])
+            try:
+                btc_holdings += float(row[0])
+            except IndexError:
+                print(f"{error_text}Error: 'crypto.csv' does not contain any added BTC yet{constants.RESET}")
+                input(f'{primary_text}----Press Enter to Continue----{constants.RESET}')
     return btc_holdings
 
 def calculate_aud_value(btc_price, btc_holdings):

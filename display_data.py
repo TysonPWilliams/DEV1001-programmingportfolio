@@ -3,19 +3,20 @@ import financial_operations as fin_ops
 import csv
 import crypto_operations
 from tabulate import tabulate
+from color50 import rgb, constants
+from colors import *
 
 def main_menu():
+    color_print("\nWelcome to the Budget Manager!", color=heading)
+    color_print("------------------------------", color=heading)
+    color_print("1. Enter an income")
+    color_print("2. Enter an expense")
+    color_print("3. Display all income and expenses")
+    color_print("4. Access Crypto Menu")
+    color_print("5. Exit the application")
+    color_print(f"-------------------------------")
 
-    print("\nWelcome to the Budget Manager!")
-    print("------------------------------")
-    print("1. Enter an income")
-    print("2. Enter an expense")
-    print("3. Display all income and expenses")
-    print("4. Access Crypto Menu")
-    print("5. Exit the application")
-    print("-------------------------------")
-
-    choice = input("Please type in a number from the options above: ")
+    choice = input(heading + f"Please type in a number from the options above: {constants.RESET}")
 
     if choice == "1":
         fin_ops.Income.add_income()
@@ -28,7 +29,8 @@ def main_menu():
     elif choice == "5":
         quit()
     else:
-        print("Your choice is invalid, try again!")
+        print(f"{error_text}\nYour choice is invalid, try again!{constants.RESET}\n")
+        input(f"{primary_text}----Press Enter to Continue----")
 
 def display_csv_as_table(path):
     """
@@ -39,44 +41,45 @@ def display_csv_as_table(path):
         headers = next(reader)
         rows = [row for row in reader]
     
-    print(tabulate(rows, headers=headers, tablefmt="grid"))
+    color_print(tabulate(rows, headers=headers, tablefmt="grid"))
 
 def display_data():
     
     while True:
 
-        print("\nWelcome to the Budget Summary Menu!")
-        print("------------------------------")
-        print("1. View all income")
-        print("2. View all expenses")
-        print("3. How am I doing for the month?")
-        print("4. What category am I spending the most on?")
-        print("5. Return to the main menu")
-        print("-------------------------------")
+        color_print("\nWelcome to the Budget Summary Menu!", heading)
+        color_print("------------------------------", heading)
+        color_print("1. View all income")
+        color_print("2. View all expenses")
+        color_print("3. How am I doing for the month?")
+        color_print("4. What category am I spending the most on?")
+        color_print("5. Return to the main menu")
+        color_print("-------------------------------", heading)
 
-        choice = input("Please type in a number from the options above: ")
+        choice = input(f"{primary_text}Please type in a number from the options above: ")
 
         if choice == "1":
             display_csv_as_table('income_data.csv')
             total = summarise_totals('income_data.csv')
-            print(f'The total amount is: ${total:.2f}!')
+            color_print(f'The total amount is: ${total:.2f}!')
             input("------Please press Enter to continue----")
         elif choice == "2":
             display_csv_as_table('expense_data.csv')
             total = summarise_totals('expense_data.csv')
-            print(f'The total amount is: ${total:.2f}!')
+            color_print(f'The total amount is: ${total:.2f}!')
             input("------Please press Enter to continue----")
         elif choice == "3":
             income_summary = summarise_totals('income_data.csv')
             fin_ops.income_expense_calc()
         elif choice == "4":
             max_category = max_category_spending()
-            print(f'\nYour max category is {max_category:.2f}!\n')
+            color_print(f'\nYour max category is {max_category[0]} with an amount of ${max_category[1]:.2f}!\n')
             input("--------Press Enter to continue-------")
         elif choice == "5":
             main_menu()
         else:
-            print("Your choice is invalid, try again!")
+            print(f"{error_text}Your choice is invalid, try again!")
+            input(f'{primary_text}----Press Enter to Continue----')
 
 
 def summarise_totals(path):

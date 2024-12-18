@@ -1,6 +1,8 @@
 from datetime import datetime
 from display_data import summarise_totals
 import file_operations
+from color50 import constants
+from colors import *
 
 class Expense:
     def __init__(self, name, amount, category, date):
@@ -10,12 +12,12 @@ class Expense:
         self.date = date
     
     def add_expense():
-        print("\nGetting User Expense")
-        print("--------------------")
+        color_print(f"\nGetting User Expense", color=heading)
+        color_print(f"--------------------", heading)
     
-        expense_name = input("Enter expense name: ")
+        expense_name = input(f"{secondary_text}Enter expense name: {constants.RESET}")
         try:
-            expense_amount = float(input("Enter the expense amount: $"))
+            expense_amount = float(input(f"{secondary_text}Enter the expense amount: ${constants.RESET}"))
         except ValueError:
             print("Error: Please enter a dollar amount ie: 4.95")
             Expense.add_expense()
@@ -36,7 +38,7 @@ class Expense:
         while True:
     
             for category in expense_category:
-                print(f'{counter}. {category}')
+                color_print(f'{counter}. {category}', heading)
                 counter += 1
     
             value_range = f'(1 - {len(expense_category)})'
@@ -73,13 +75,13 @@ class Income:
         self.date = date
 
     def add_income():
-        print("\nGetting User Income")
-        print("----------------------")
+        color_print("\nGetting User Income", heading)
+        color_print("----------------------", heading)
 
-        income_name = input("Enter the income name: ")
+        income_name = input(f"{secondary_text}Enter the income name: {constants.RESET}")
         
         try:
-            income_amount = float(input("Enter the income amount: $"))
+            income_amount = float(input(f"{secondary_text}Enter the income amount: ${constants.RESET}"))
         except ValueError:
             print("Please enter a dollar value, ie: 2.55")
             Income.add_income()
@@ -96,11 +98,11 @@ class Income:
         ]
 
         for i, category in enumerate(income_category):
-            print(f'{i + 1}. {category}')
+            color_print(f'{i + 1}. {category}', color=heading)
 
         value_range = f'(1 - {len(income_category)})'
         try:
-            choice_of_category = int(input(f'Please enter a category number {value_range}: ')) - 1
+            choice_of_category = int(input(f'{secondary_text}Please enter a category number {value_range}: {constants.RESET}')) - 1
         except ValueError:
             print(f"Please enter a whole number: {value_range}")
             print("----Press Enter to Continue----")
@@ -131,14 +133,14 @@ def income_expense_calc():
     income_summary = summarise_totals('income_data.csv')
     expense_summary = summarise_totals('expense_data.csv')
     financial_position = float(income_summary) - float(expense_summary)
-    print('---------------------------------------------------------')
-    print(f'\nYou have earned ${income_summary:.2f} and spent ${expense_summary:.2f} on expenses.')
+    color_print('---------------------------------------------------------', heading)
+    color_print(f'\nYou have earned ${income_summary:.2f} and spent ${expense_summary:.2f} on expenses.\n')
     if financial_position > 0.0:
-        print(f'You have ${financial_position:.2f} remaining after your expenses.')
+        color_print(f'You have ${financial_position:.2f} remaining after your expenses.')
     elif financial_position == 0.0:
-        print("You have no money left after your expenses")
+        color_print("You have no money left after your expenses")
     else:
-        print(f'You have spent ${financial_position:.2f} more than what you have earned.')
+        color_print(f'You have spent ${financial_position:.2f} more than what you have earned.')
     
-    input("------Press Enter to Continue-----")
+    input(f"{primary_text}------Press Enter to Continue-----{constants.RESET}")
     

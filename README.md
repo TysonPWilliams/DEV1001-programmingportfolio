@@ -1,12 +1,82 @@
-# Personal Budget/Finance Manager
+# Budget Manager with Bitcoin Tracking
 
-- App that helps to manage your finances
+This is a personal finance application that helps you manage your income, expenses, and crypto investments.
 
-## Features
-- Loads data from existing CSV file
-- Adds income and expenditure
-- Saves income and expenditure to exising CSV file
-- Displays all income and expenditure for the month
-- Filter and display high expenses
-- Error handling for user input and file ops
-- Calculate remaining budget for the month
+## Features:
+
+- **Income and Expense Tracking:** Manually input your income and expenses, categorised for easy budgeting.
+- **CSV File Storage:** Data is saved securely in CSV files for future reference and analysis.
+- **Top Spending Category:** See which category you're spending the most on to optimise your budget.
+- **Crypto Investment Tracking:** Track your Bitcoin (BTC) purchases and holdings.
+- **Real-time BTC Price Check:** View the current value of your BTC wallet based on CoinmarketCap API.
+
+## Setting Up
+
+1. **Create a Virtual Environment:**
+
+    - Open your linux-based terminal
+    - CD into the root folder of this application
+    - Run the following command to create a virtual environment called '.venv'
+
+        ```bash
+        python3 -m venv .venv
+        ```
+    - Activate the virtual environment
+
+        ```bash
+        source .venv/bin/activate
+        ```
+
+2. **Install Dependancies**
+    
+    - Inside the activated virtual environment, run the following command:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3. **Get your CoinMarketCap API Key:**
+
+    - Create an account on the [CoinMarketCap API Page](https://coinmarketcap.com/api/).
+    - Create a new API key and copy it.
+
+4. **Create a Secret File:**
+
+    - Create a new file in the index of the program called 'secret.py'
+    - Inside 'secret.py', add the following line, replacing 'YOUR_API_KEY' with your new CoinMarketCap API key:
+
+        ```python
+        API_KEY = "YOUR_API_KEY"
+        ```
+
+## Running the Application
+
+1. Make sure that the virtual environment is activated
+2. Run the application by typing the following in terminal:
+
+    ```bash
+    python3 main.py
+    ```
+
+## Usage
+
+The application will run you through adding income, expenses and BTC amounts.
+
+## Third-Party Libraries and Licenses
+
+This project uses the following third-party libraries:
+
+*   **certifi:** Mozilla Public License 2.0 (MPL-2.0) [https://www.mozilla.org/en-US/MPL/2.0/](https://www.mozilla.org/en-US/MPL/2.0/)
+*   **charset-normalizer:** MIT License [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+*   **color50:** MIT License [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+*   **idna:** BSD License (typically a 3-clause BSD) [https://opensource.org/licenses/BSD-3-Clause](https://opensource.org/licenses/BSD-3-Clause)
+*   **requests:** Apache License 2.0 [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
+*   **tabulate:** MIT License [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+*   **urllib3:** MIT License [https://opensource.org/licenses/MIT](https://opensource.org/licenses/MIT)
+
+Since all the libraries used are permissive licenses, their use in my project is generally considered ethical.
+
+These libraries are used under their respective open-source licenses.
+
+## References
+
